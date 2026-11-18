@@ -24,6 +24,7 @@ public class SalesReport {
         sealyPhuket = input.nextInt();
         
         // Output
-        
+        System.out.printf("PRODUCT SALES REPORT - 2026\n ****************************************************\n TOTAL PRODUCT SALES: %f\n AVERAGE PRODUCT SALES: %f\n MOST POPULAR PRODUCT: %s\n", 
+                product.getTotalProductsSold(), product.getAverageProductSold(), product.getMostPopularProduct());
     }
 }
