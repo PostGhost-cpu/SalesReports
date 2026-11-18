@@ -19,38 +19,63 @@ public class Product implements IProducts {
     // Private
     private int[] sells;
     private int total, average, popular;
+    private final int[] cozySold; 
+    private final int[] restonicSold;
+    private final int[] sealySold;
     
-    public Product (int[][][] sells, int total, int average, int popular) { // Constructor
-        this.sells = sells;
+    public Product (int[] cozySold, int[] restonicSold, int[] sealySold, int total, int average, int popular) { // Constructor
+        this.cozySold = cozySold;
+        this.restonicSold = restonicSold;
+        this.sealySold = sealySold;
         this.total = total;
         this.average = average;
         this.popular = popular;
     }
     
-    // Setter
-    public void setSells(int[] sells) {
-        this.sells = sells;
+    // Getter
+    public int[] getCozy() {
+        return this.cozySold;
+    }
+    public int[] getRestonic() {
+        return this.restonicSold;
+    }
+    public int[] getSealy() {
+        return this.sealySold;
     }
     
-    // Getter
-    public int[] getSells() {
-        return this.sells;
+    // Setter
+    public int[] setCozy() {
+        return this.getCozy();
+    }
+    public int[] setRestonic() {
+        return this.getRestonic();
+    }
+    public int[] setSealy() {
+        return this.getSealy();
+    }
+    
+    // Combine
+    @SuppressWarnings("empty-statement")
+    public int[][][] array(int[] cozySold, int[] restonicSold, int[] sealySold) {
+        int[][][] combined;
+        combined = {cozySold, restonicSold, sealySold};
+        return combined;
     }
     
     // Methods
-    public int totalSold(int[] sells) {
-        this.total = Arrays.stream(sells).sum();
+    public int totalSold() {
+        this.total = Arrays.stream(this.array(cozySold, restonicSold, sealySold)).sum();
         return this.total;
     }
     
-    public double averageSold(int[] sells) {
-        double[] convertSells = Arrays.stream(sells).asDoubleStream().toArray();
+    public double averageSold() {
+        double[] convertSells = Arrays.stream(this.array(cozySold, restonicSold, sealySold)).asDoubleStream().toArray();
         this.average = Arrays.stream(convertSells).average().orElse(0.0);
         return this.average;
     }
     
-    public String mostPopular(int[] sells) {
-        this.popular = Arrays.stream(sells).flatMap(Arrays::stream).max()
+    public String mostPopular() {
+        this.popular = Arrays.stream(this.array(cozySold, restonicSold, sealySold)).flatMap(Arrays::stream).max()
                 .orElseThrow(() -> new IllegalArgumentException("Array is empty"));
         return this.popular;
     }
@@ -58,16 +83,16 @@ public class Product implements IProducts {
     // Interface
     @Override
     public int getTotalProductsSold() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.totalSold();
     }
 
     @Override
     public double getAverageProductSold() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.averageSold();
     }
 
     @Override
     public String getMostPopularProduct() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.mostPopular();
     }    
 }
